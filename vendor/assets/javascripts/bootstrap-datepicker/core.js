@@ -34,6 +34,7 @@
     var that = this;
 
     this.element = $(element);
+    this.triggeringElement;
     this.language = options.language||this.element.data('date-language')||"en";
     this.language = this.language in dates ? this.language : "en";
     this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'mm/dd/yyyy');
@@ -456,7 +457,6 @@
     },
 
     click: function(e) {
-      console.log(e, this);
       e.stopPropagation();
       e.preventDefault();
       var target = $(e.target).closest('span, td, th');
@@ -536,6 +536,7 @@
                   month += 1;
                 }
               }
+              this.triggeringElement = $(e.srcElement);
               this._setDate(UTCDate(year, month, day,0,0,0,0));
             }
             break;
@@ -553,7 +554,7 @@
       this.element.trigger({
         type: 'changeDate',
         date: this.date,
-        element: this.element
+        element: this.triggeringElement
       });
       var element;
       if (this.isInput) {
