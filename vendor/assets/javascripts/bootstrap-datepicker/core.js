@@ -241,8 +241,8 @@
         var selection = new Date(this.date),
             firstDay = selection.getDate() - selection.getDay() + 1,
             lastDay = selection.getDate() - selection.getDay() + 7,
-            firstDayDate = DPGlobal.formatDate(firstDay, this.format, this.language),
-            lastDayDate = DPGlobal.formatDate(lastDay, this.format, this.language);
+            firstDayDate = DPGlobal.formatDate(new Date(firstDay), this.format, this.language),
+            lastDayDate = DPGlobal.formatDate(new Date(lastDay), this.format, this.language);
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + '-' + lastDayDate);
