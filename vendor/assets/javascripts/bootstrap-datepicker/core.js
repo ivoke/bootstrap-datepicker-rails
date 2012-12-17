@@ -34,7 +34,6 @@
     var that = this;
 
     this.element = $(element);
-    this.triggeringElement;
     this.language = options.language||this.element.data('date-language')||"en";
     this.language = this.language in dates ? this.language : "en";
     this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'mm/dd/yyyy');
@@ -536,7 +535,6 @@
                   month += 1;
                 }
               }
-              this.triggeringElement = $(e.srcElement);
               this._setDate(UTCDate(year, month, day,0,0,0,0));
             }
             break;
@@ -553,8 +551,7 @@
       this.setValue();
       this.element.trigger({
         type: 'changeDate',
-        date: this.date,
-        element: this.triggeringElement
+        date: this.date
       });
       var element;
       if (this.isInput) {
