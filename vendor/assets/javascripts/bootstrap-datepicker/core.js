@@ -238,15 +238,18 @@
         }
       }
       else {
-        var firstDay = DPGlobal.formatDate(this.date.getDate() - this.date.getDay() + 1, this.format, this.language),
-            lastDay = DPGlobal.formatDate(this.date.getDate() - this.date.getDay() + 7, this.format, this.language);
+        var selection = new Date(this.date),
+            firstDay = selection.getDate() - selection.getDay() + 1,
+            lastDay = selection.getDate() - selection.getDay() + 7,
+            firstDayDate = DPGlobal.formatDate(firstDay, this.format, this.language),
+            lastDayDate = DPGlobal.formatDate(lastDay, this.format, this.language);
         if (!this.isInput) {
           if (this.component){
-            this.element.find('input').prop('value', formatted);
+            this.element.find('input').prop('value', firstDayDate + '-' + lastDayDate);
           }
-          this.element.data('date', firstDay + '-' + lastDay);
+          this.element.data('date', firstDayDate + '-' + lastDayDate);
         } else {
-          this.element.prop('value', firstDay + '-' + lastDay);
+          this.element.prop('value', firstDayDate + '-' + lastDayDate);
         }
       }
     },
