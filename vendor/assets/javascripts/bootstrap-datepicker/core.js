@@ -245,7 +245,7 @@
             lastDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth() + 1, lastDay), this.format, this.language);
         console.log("selection", selection, "firstDay", firstDay, "lastDay", lastDay, "firstDayDate", firstDayDate, "lastDayDate", lastDayDate);
         console.log("full year", selection.getFullYear(), "month", selection.getMonth() +1);
-        console.log("computed date", new Date(selection.getFullYear(), selection.getMonth() + 1, firstDay);
+        console.log("computed date", new Date(selection.getFullYear(), selection.getMonth() + 1, firstDay));
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + '-' + lastDayDate);
