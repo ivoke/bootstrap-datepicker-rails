@@ -551,7 +551,8 @@
       this.setValue();
       this.element.trigger({
         type: 'changeDate',
-        date: this.date
+        date: this.date,
+        element: this.element
       });
       var element;
       if (this.isInput) {
