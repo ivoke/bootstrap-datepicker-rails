@@ -244,6 +244,7 @@
             firstDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth() + 1, firstDay), this.format, this.language),
             lastDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth() + 1, lastDay), this.format, this.language);
         console.log("selection", selection, "firstDay", firstDay, "lastDay", lastDay, "firstDayDate", firstDayDate, "lastDayDate", lastDayDate);
+        console.log("full year", selection.getFullYear(), "month", selection.getMonth() +1);
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + '-' + lastDayDate);
