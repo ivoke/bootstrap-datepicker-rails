@@ -456,7 +456,7 @@
     },
 
     click: function(e) {
-      console.log(this);
+      console.log(e, this);
       e.stopPropagation();
       e.preventDefault();
       var target = $(e.target).closest('span, td, th');
