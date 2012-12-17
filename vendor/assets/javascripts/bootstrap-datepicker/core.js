@@ -238,11 +238,11 @@
         }
       }
       else {
-        var selection = new UTCDate(this.date),
+        var selection = UTCDate(this.date),
             firstDay = selection.getDate() - selection.getDay() + 1,
             lastDay = selection.getDate() - selection.getDay() + 7,
-            firstDayDate = DPGlobal.formatDate(new UTCDate(selection.getFullYear(), selection.getMonth() + 1, firstDay), this.format, this.language),
-            lastDayDate = DPGlobal.formatDate(new UTCDate(selection.getFullYear(), selection.getMonth() + 1, lastDay), this.format, this.language);
+            firstDayDate = DPGlobal.formatDate(UTCDate(selection.getFullYear(), selection.getMonth() + 1, firstDay), this.format, this.language),
+            lastDayDate = DPGlobal.formatDate(UTCDate(selection.getFullYear(), selection.getMonth() + 1, lastDay), this.format, this.language);
         console.log("selection", selection, "firstDay", firstDay, "lastDay", lastDay, "firstDayDate", firstDayDate, "lastDayDate", lastDayDate);
         if (!this.isInput) {
           if (this.component){
