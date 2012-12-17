@@ -226,14 +226,28 @@
     },
 
     setValue: function() {
-      var formatted = DPGlobal.formatDate(this.date, this.format, this.language);
-      if (!this.isInput) {
-        if (this.component){
-          this.element.find('input').prop('value', formatted);
+      if (!this.selectWeek) {
+        var formatted = DPGlobal.formatDate(this.date, this.format, this.language);
+        if (!this.isInput) {
+          if (this.component){
+            this.element.find('input').prop('value', formatted);
+          }
+          this.element.data('date', formatted);
+        } else {
+          this.element.prop('value', formatted);
         }
-        this.element.data('date', formatted);
-      } else {
-        this.element.prop('value', formatted);
+      }
+      else {
+        var firstDay = DPGlobal.formatDate(this.date.getDate() - this.date.getDay() + 1, this.format, this.language),
+            lastDay = DPGlobal.formatDate(this.date.getDate() - this.date.getDay() + 7, this.format, this.language);
+        if (!this.isInput) {
+          if (this.component){
+            this.element.find('input').prop('value', formatted);
+          }
+          this.element.data('date', firstDay + '-' + lastDay);
+        } else {
+          this.element.prop('value', firstDay + '-' + lastDay);
+        }
       }
     },
 
@@ -439,7 +453,6 @@
     },
 
     click: function(e) {
-      if (selectWeek) { alert(); }
       e.stopPropagation();
       e.preventDefault();
       var target = $(e.target).closest('span, td, th');
