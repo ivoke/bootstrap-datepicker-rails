@@ -248,11 +248,11 @@
         console.log("computed date", new Date(selection.getFullYear(), selection.getMonth() + 1, firstDay));
         if (!this.isInput) {
           if (this.component){
-            this.element.find('input').prop('value', firstDayDate + '-' + lastDayDate);
+            this.element.find('input').prop('value', firstDayDate + ' - ' + lastDayDate);
           }
-          this.element.data('date', firstDayDate + '-' + lastDayDate);
+          this.element.data('date', firstDayDate + ' - ' + lastDayDate);
         } else {
-          this.element.prop('value', firstDayDate + '-' + lastDayDate);
+          this.element.prop('value', firstDayDate + ' - ' + lastDayDate);
         }
       }
     },
