@@ -238,11 +238,19 @@
         }
       }
       else {
-        var selection = new Date(this.date),
-            firstDay = selection.getDate() - selection.getDay() + 1,
-            lastDay = selection.getDate() - selection.getDay() + 7,
-            firstDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), firstDay + 1), this.format, this.language),
+        var selection = new Date(this.date);
+
+        if (selection.getDay() > 0) {
+          var firstDay = selection.getDate() - selection.getDay() + 1,
+              lastDay = selection.getDate() - selection.getDay() + 7;
+        } else {
+          var firstDay = selection.getDate() - selection.getDay() - 6,
+              lastDay = selection.getDate();
+        }
+
+        var firstDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), firstDay + 1), this.format, this.language),
             lastDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), lastDay + 1), this.format, this.language);
+
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + ' - ' + lastDayDate);
