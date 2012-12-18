@@ -251,7 +251,6 @@
         var firstDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), firstDay + 1), this.format, this.language),
             lastDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), lastDay + 1), this.format, this.language);
 
-        console.log(isoHelper.getWeekNumber(selection));
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + ' - ' + lastDayDate);
@@ -560,7 +559,8 @@
       this.setValue();
       this.element.trigger({
         type: 'changeDate',
-        date: this.date
+        date: this.date,
+        week: isoHelper.getWeekNumber(this.date)
       });
       var element;
       if (this.isInput) {
