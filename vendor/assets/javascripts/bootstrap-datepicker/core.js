@@ -251,6 +251,7 @@
         var firstDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), firstDay + 1), this.format, this.language),
             lastDayDate = DPGlobal.formatDate(new Date(selection.getFullYear(), selection.getMonth(), lastDay + 1), this.format, this.language);
 
+        console.log(isoHelper.getWeekNumber(selection));
         if (!this.isInput) {
           if (this.component){
             this.element.find('input').prop('value', firstDayDate + ' - ' + lastDayDate);
@@ -922,4 +923,96 @@
                 '</table>'+
               '</div>'+
             '</div>';
+
+  var isoHelper = {
+    getWeekNumber: function(ddate) {
+      // 1. Convert input to Y M D
+      var Y = ddate.getFullYear();
+     
+      // 4. Find the DayOfYearNumber for Y M D
+      var DayOfYearNumber = isoHelper.findDayOfYearNumber(ddate);
+     
+      // 5. Find the Jan1Weekday for Y (Monday=1, Sunday=7)
+      var Jan1Weekday = isoHelper.findJan1Weekday(ddate);
+     
+      // 6. Find the Weekday for Y M D
+      var WeekDay = isoHelper.findDayWeek(ddate);
+
+      // 7. Find if Y M D falls in YearNumber Y-1, WeekNumber 52 or 53
+      var YearNumber = Y;
+      var WeekNumber = 0;
+      if((DayOfYearNumber <= (8 - Jan1Weekday)) && (Jan1Weekday > 4)) {
+          YearNumber = Y - 1;
+          ddate.setFullYear(YearNumber); // set the correct year for the isLeapYear
+          if((Jan1Weekday == 5) || (Jan1Weekday == 6 && isoHelper.isLeapYear(ddate))) {
+              WeekNumber = 53;
+          } else {
+              WeekNumber = 52;
+          }
+          ddate.setFullYear(Y); // undo the chage in the date object
+      }
+
+      // 8. Find if Y M D falls in YearNumber Y+1, WeekNumber 1
+      if(YearNumber == Y) {
+          var I;
+          if(isoHelper.isLeapYear(ddate)) {
+              I = 366;
+          } else {
+              I = 365
+          }
+         
+          if ((I - DayOfYearNumber) < (4 - WeekDay)) {
+              YearNumber = Y + 1;
+              WeekNumber = 1;
+          }
+      }
+     
+      // 9. Find if Y M D falls in YearNumber Y, WeekNumber 1 through 53
+      if(YearNumber == Y) {
+          var J;
+          J = DayOfYearNumber + (7 - WeekDay) + (Jan1Weekday - 1)
+          WeekNumber = J / 7;
+          if(Jan1Weekday > 4 ) {
+              WeekNumber -= 1;
+          }
+      }
+
+      return WeekNumber;
+    },
+    isLeapYear: function(ddate) {
+      var Y = ddate.getFullYear();
+      if ((Y % 4) == 0 && (Y % 100) != 0) {
+          return true;
+      }
+      if((Y % 400) == 0) {
+          return true;
+      }
+      return false;
+    },
+    findDayOfYearNumber: function(ddate) {
+      var months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+     
+      var day = ddate.getDate() + months[ddate.getMonth()];
+      // only for march and onwards in leap years: 
+      if(isoHelper.isLeapYear(ddate) && ddate.getMonth() > 1) {
+          day++;
+      }
+     
+      return day;
+    },
+    findJan1Weekday: function(ddate) {
+      var d = new Date(ddate.getFullYear(), 0, 1);
+      // convert from 0=sun .. 1=mon
+      // to 1=mon to 7=sun
+      return(isoHelper.findDayWeek(d));
+    },
+    findDayWeek: function (ddate) {
+      var WeekDay = ddate.getDay();
+      if(WeekDay == 0) {
+          WeekDay = 7;
+      }
+     
+      return WeekDay;
+    }
+  }
 }( window.jQuery );
