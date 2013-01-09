@@ -253,11 +253,11 @@
 
         if (!this.isInput) {
           if (this.component){
-            this.element.find('input').prop('value', firstDayDate + ' - ' + lastDayDate);
+            this.element.find('input').prop('value', lastDayDate);
           }
-          this.element.data('date', firstDayDate + ' - ' + lastDayDate);
+          this.element.data('date', lastDayDate);
         } else {
-          this.element.prop('value', firstDayDate + ' - ' + lastDayDate);
+          this.element.prop('value', lastDayDate);
         }
       }
     },
